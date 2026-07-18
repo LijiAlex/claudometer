@@ -34,4 +34,13 @@ struct DisplayTests {
         #expect(g.weekly.count == 2)
         #expect(g.other.count == 1)
     }
+
+    @Test func menuTitleStates() {
+        let limits = [UsageLimit(kind: "session", group: "session", percent: 5, severity: "normal", resetsAt: nil, scope: nil, isActive: false)]
+        #expect(menuTitle(for: .loaded(limits, at: Date())) == "5%")
+        #expect(menuTitle(for: .notLoggedIn) == "–")
+        #expect(menuTitle(for: .loading) == "…")
+        #expect(menuTitle(for: .failed("x", lastGood: (limits, Date()))) == "5%")
+        #expect(menuTitle(for: .failed("x", lastGood: nil)) == "–")
+    }
 }
