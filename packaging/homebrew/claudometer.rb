@@ -5,7 +5,8 @@ class Claudometer < Formula
   # Filled in when tagging v0.1.0: curl -L <url> | shasum -a 256
   sha256 "PLACEHOLDER_SHA256_COMPUTE_AT_RELEASE"
   license "MIT"
-  depends_on xcode: :build
+  # Builds with Xcode Command Line Tools (Homebrew requires them already);
+  # full Xcode is NOT needed — `swift build` under CLT compiles this app.
   depends_on :macos
 
   def install
