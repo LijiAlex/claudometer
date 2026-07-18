@@ -11,6 +11,9 @@ app: build
 	mkdir -p $(APP)/Contents/MacOS
 	cp $(BIN) $(APP)/Contents/MacOS/Claudometer
 	cp Info.plist $(APP)/Contents/Info.plist
+	# Ad-hoc sign so the macOS Keychain "Always Allow" grant sticks across
+	# launches of this build (unsigned binaries re-prompt every time).
+	codesign --force --deep --sign - $(APP)
 
 install: app
 	rm -rf /Applications/$(APP)
