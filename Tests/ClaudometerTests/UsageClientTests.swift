@@ -29,6 +29,12 @@ struct UsageClientTests {
 
     @Test func unauthorizedMapsToError() async {
         let client = UsageClient(tokenProvider: StubToken()) { _ in (Data(), self.http(401)) }
-        await #expect(throws: UsageError.self) { try await client.fetch() }
+        do {
+            _ = try await client.fetch()
+            Issue.record("expected throw")
+        } catch UsageError.unauthorized {
+        } catch {
+            Issue.record("wrong error: \(error)")
+        }
     }
 }
