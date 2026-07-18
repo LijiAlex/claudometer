@@ -13,9 +13,14 @@ final class StatusItemController {
     init(store: UsageStore) {
         self.store = store
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusItem.button?.title = "…"
-        statusItem.button?.target = self
-        statusItem.button?.action = #selector(togglePopover)
+        if let button = statusItem.button {
+            button.image = NSImage(systemSymbolName: "gauge", accessibilityDescription: "Claude usage")
+            button.image?.isTemplate = true
+            button.imagePosition = .imageLeading
+            button.title = "…"
+            button.target = self
+            button.action = #selector(togglePopover)
+        }
 
         popover.behavior = .transient
         popover.contentViewController = NSHostingController(
