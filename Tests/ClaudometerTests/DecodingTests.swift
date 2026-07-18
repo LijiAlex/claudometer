@@ -1,38 +1,39 @@
-import XCTest
+import Foundation
+import Testing
 @testable import Claudometer
 
-final class DecodingTests: XCTestCase {
+struct DecodingTests {
     private func fixtureData() throws -> Data {
-        let url = try XCTUnwrap(Bundle.module.url(forResource: "usage", withExtension: "json"))
+        let url = try #require(Bundle.module.url(forResource: "usage", withExtension: "json"))
         return try Data(contentsOf: url)
     }
 
-    func testDecodesLimitsArray() throws {
+    @Test func decodesLimitsArray() throws {
         let resp = try makeUsageDecoder().decode(UsageResponse.self, from: fixtureData())
-        XCTAssertEqual(resp.limits.count, 3)
+        #expect(resp.limits.count == 3)
 
         let session = resp.limits[0]
-        XCTAssertEqual(session.kind, "session")
-        XCTAssertEqual(session.percent, 5)
-        XCTAssertEqual(session.isActive, false)
-        XCTAssertNil(session.scope)
+        #expect(session.kind == "session")
+        #expect(session.percent == 5)
+        #expect(session.isActive == false)
+        #expect(session.scope == nil)
 
         let scoped = resp.limits[2]
-        XCTAssertEqual(scoped.kind, "weekly_scoped")
-        XCTAssertEqual(scoped.percent, 37)
-        XCTAssertEqual(scoped.scope?.model?.displayName, "Fable")
-        XCTAssertEqual(scoped.isActive, true)
+        #expect(scoped.kind == "weekly_scoped")
+        #expect(scoped.percent == 37)
+        #expect(scoped.scope?.model?.displayName == "Fable")
+        #expect(scoped.isActive == true)
     }
 
-    func testDecodesResetDate() throws {
+    @Test func decodesResetDate() throws {
         let resp = try makeUsageDecoder().decode(UsageResponse.self, from: fixtureData())
-        let reset = try XCTUnwrap(resp.limits[0].resetsAt)
+        let reset = try #require(resp.limits[0].resetsAt)
         // 2026-07-18T01:50:00Z
         let comps = Calendar(identifier: .gregorian).dateComponents(in: TimeZone(identifier: "UTC")!, from: reset)
-        XCTAssertEqual(comps.year, 2026)
-        XCTAssertEqual(comps.month, 7)
-        XCTAssertEqual(comps.day, 18)
-        XCTAssertEqual(comps.hour, 1)
-        XCTAssertEqual(comps.minute, 50)
+        #expect(comps.year == 2026)
+        #expect(comps.month == 7)
+        #expect(comps.day == 18)
+        #expect(comps.hour == 1)
+        #expect(comps.minute == 50)
     }
 }
