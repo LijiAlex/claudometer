@@ -3,7 +3,7 @@
 A tiny macOS menu bar app that shows your Claude usage limits at a glance —
 the same session / weekly percentages as Claude Code's `/usage` panel.
 
-![screenshot](docs/screenshot.png)
+<!-- screenshot to be added -->
 
 ## Install
 

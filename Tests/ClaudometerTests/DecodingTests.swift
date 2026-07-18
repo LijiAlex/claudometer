@@ -36,4 +36,25 @@ struct DecodingTests {
         #expect(comps.hour == 1)
         #expect(comps.minute == 50)
     }
+
+    @Test func percentAsFloatDecodesToRoundedInt() throws {
+        let json = """
+        {"limits": [
+            {"kind": "session", "group": "session", "percent": 36.0, "severity": "normal", "is_active": false}
+        ]}
+        """.data(using: .utf8)!
+        let resp = try makeUsageDecoder().decode(UsageResponse.self, from: json)
+        #expect(resp.limits[0].percent == 36)
+    }
+
+    @Test func missingSeverityAndIsActiveStillDecodes() throws {
+        let json = """
+        {"limits": [
+            {"kind": "session", "group": "session", "percent": 5}
+        ]}
+        """.data(using: .utf8)!
+        let resp = try makeUsageDecoder().decode(UsageResponse.self, from: json)
+        #expect(resp.limits[0].severity == nil)
+        #expect(resp.limits[0].isActive == false)
+    }
 }

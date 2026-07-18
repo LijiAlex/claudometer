@@ -72,7 +72,10 @@ struct PopoverView: View {
         HStack {
             Toggle("Launch at login", isOn: $launchAtLogin)
                 .toggleStyle(.checkbox)
-                .onChange(of: launchAtLogin) { newValue in LaunchAtLogin.set(newValue) }
+                .onChange(of: launchAtLogin) { newValue in
+                    LaunchAtLogin.set(newValue)
+                    launchAtLogin = LaunchAtLogin.isEnabled
+                }
             Spacer()
             Button("Refresh", action: onRefresh)
             Button("Quit", action: onQuit)
