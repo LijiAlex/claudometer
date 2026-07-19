@@ -2,8 +2,7 @@ class Claudometer < Formula
   desc "macOS menu bar app for Claude usage limits"
   homepage "https://github.com/LijiAlex/claudometer"
   url "https://github.com/LijiAlex/claudometer/archive/refs/tags/v0.1.0.tar.gz"
-  # Filled in when tagging v0.1.0: curl -L <url> | shasum -a 256
-  sha256 "PLACEHOLDER_SHA256_COMPUTE_AT_RELEASE"
+  sha256 "b893a76434cb195b7097121ae8873c499fe5947355b674f0756b80b48d3d020c"
   license "MIT"
   # Builds with Xcode Command Line Tools (Homebrew requires them already);
   # full Xcode is NOT needed — `swift build` under CLT compiles this app.
