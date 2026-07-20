@@ -13,6 +13,15 @@ brew install LijiAlex/tap/claudometer
 ```
 Then launch **Claudometer** from Spotlight.
 
+> **Note:** Homebrew builds from source and requires an up-to-date Xcode
+> Command Line Tools. If the build fails with `Invalid manifest` or
+> *"A newer Command Line Tools release is available"*, update them and retry:
+> ```bash
+> sudo rm -rf /Library/Developer/CommandLineTools
+> sudo xcode-select --install
+> ```
+> Or use the **From source** method below, which only needs `swift build`.
+
 ### From source
 ```bash
 git clone https://github.com/LijiAlex/claudometer.git
